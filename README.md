@@ -14,5 +14,7 @@
 目录
 1. 数据结构
     1. [稀疏数组](data-structures/sparse.md)
+    2. [队列](data-structures/queue.md)
+    3. [链表](data-structures/linked-list.md)
    
 11集
