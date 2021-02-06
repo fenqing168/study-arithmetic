@@ -14,6 +14,10 @@ public class LinkedList<T extends Comparable<T>> {
      */
     private LinkedListNode<T> head;
 
+    public LinkedListNode<T> getHead() {
+        return head;
+    }
+
     public void add(T value){
         LinkedListNode<T> newNode = new LinkedListNode<>(value, null);
         LinkedListNode<T> headTemp = head;
