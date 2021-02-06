@@ -93,6 +93,51 @@ public class BothwayLinkedList<T extends Comparable<T>> {
         }
     }
 
+    public void addByOrder(T value){
+        Node<T> newNode = new Node<>(value, null, null);
+        if(head == null){
+            head = newNode;
+            return;
+        }
+        int compareTo = value.compareTo(head.getData());
+        if(compareTo < 0){
+            Node<T> headTemp = head;
+            head = newNode;
+            head.setNext(headTemp);
+            headTemp.setPre(head);
+            return;
+        }else if(compareTo == 0){
+            System.out.println("出现重复");
+            return;
+        }
+        Node<T> headTemp = head;
+        boolean flag = false;
+        while (true){
+            if(headTemp.getNext() == null){
+                break;
+            }
+            int compareTo1 = value.compareTo(headTemp.getNext().getData());
+            if(compareTo1 < 0){
+                break;
+            }else if(compareTo1 == 0){
+                flag = true;
+                break;
+            }
+            headTemp = headTemp.getNext();
+        }
+        if(flag){
+            System.out.println("出现重复");
+        }else{
+            Node<T> next = headTemp.getNext();
+            if(next != null){
+                next.setPre(newNode);
+            }
+            newNode.setNext(next);
+            newNode.setPre(headTemp);
+            headTemp.setNext(newNode);
+        }
+    }
+
     @ToString
     @Getter
     @Setter
@@ -124,10 +169,10 @@ public class BothwayLinkedList<T extends Comparable<T>> {
 //            heroLinkedList.addByOrder(new Hero(random.nextInt(9999999), "刘备" + i, "皇叔" + i));
 //        }
 
-        heroLinkedList.add(new Hero(2, "关羽", "汉寿亭侯"));
-        heroLinkedList.add(new Hero(1, "张飞", "莽撞人"));
-        heroLinkedList.add(new Hero(99, "张飞", "莽撞人"));
-        heroLinkedList.add(new Hero(45, "张飞", "莽撞人"));
+        heroLinkedList.addByOrder(new Hero(2, "关羽", "汉寿亭侯"));
+        heroLinkedList.addByOrder(new Hero(1, "张飞", "莽撞人"));
+        heroLinkedList.addByOrder(new Hero(99, "张飞", "莽撞人"));
+        heroLinkedList.addByOrder(new Hero(45, "张飞", "莽撞人"));
         heroLinkedList.list();
         System.out.println();
         heroLinkedList.update(new Hero(45, "张飞", "莽撞人+粗汉"));
