@@ -38,9 +38,11 @@ public class Theme5 {
      * 反合并两个链表
      * 思路
      *  1. 如果其中一个链表为空，则返回另外一个链表，
-     *  2. 如果都不为空，则遍历root2，遇到的每一个节点与root1的当前节点比较，只有在小于或者等于的情况下，将其取出，并插入到root1的头部
-     *  3、 如果大于，则root1后退一步，在与剩下的root2节点比较，直到root2或者root1其中一个遍历完，如果是root1遍历完，则讲剩下的root2追加到root1的尾部
-     *  34 当root1开始向后移动，说明最小值已经确认，则可以保存链表头
+     *  2. 新建两个变量，mer来记录合并后的链表的头节点，merCur用于做游标
+     *  3、然后创建两个变量，作用于两个链表的游标，并且遍历，比较两个游标对应的值，比较小的拿出来给merCur的next，并且
+     *      merCur向下一个走1，也就是比较小的节点，然后对应的链表游标也向后走1,（谁小就拿谁，然后自己向后走1）第一次循环就能判断出最小的节点，同时需要赋给mer
+     *      当做链表头
+     *  34 当root1，root2的游标任意一个走完了，则需要知道那个没走完，则将每走完的剩余部分给到merCur.next
      * @param root1 根节点1
      * @param root2 根节点2
      */
@@ -58,7 +60,7 @@ public class Theme5 {
         while (cur1 != null && cur2 != null){
             Integer data1 = cur1.getData();
             Integer data2 = cur2.getData();
-            LinkedListNode<Integer> temp = null;
+            LinkedListNode<Integer> temp;
             if(data1.compareTo(data2) <= 0){
                 temp = cur1;
                 cur1 = cur1.getNext();
