@@ -51,3 +51,8 @@
    4. 删除，因为双向表，删除则可以找到要删除的节点，取出前后节点相连接
    
 3. 代码实现见cn.fenqing.datastructures.linkedlist.BothwayLinkedList
+
+# 单向环形链表
+1. 应用场景
+   1. Josephu（约瑟夫）问题：设编号为1,2,...n的n个人围坐一圈，约定编号为k (1 <= k <= n)
+   的人从1开始报数，
