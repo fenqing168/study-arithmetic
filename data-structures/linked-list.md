@@ -55,4 +55,14 @@
 # 单向环形链表
 1. 应用场景
    1. Josephu（约瑟夫）问题：设编号为1,2,...n的n个人围坐一圈，约定编号为k (1 <= k <= n)
-   的人从1开始报数，
+   的人从1开始报数，数到m的那个人出列，他的下一位又从1开始报数，数到m的那个人又出列，依次类推，
+   直到所有人都出列为止，由此产生一个出队编号的序列
+   2. 构建思路：
+      1. 先创建第一个节点，让first只想该节点，并形成环
+      2. 后面每当我们创建一个新的节点，就把该节点加入到已有的环形链表中即可
+   3. 代码见 cn.fenqing.datastructures.linkedlist.Josepfu，与 cn.fenqing.datastructures.linkedlist.CircularLinkedList
+   4. 约瑟夫解答思路：
+      1. 需求创建一个辅助指针（变量）helper, 事先应该指向环形链表的最后一个节点
+      2. 当小孩报数时，让first和helper指针同事的移动m - 1次
+      3. 这是就可以将first指向小孩节出圈
+   5. 代码见： cn.fenqing.datastructures.linkedlist.Josepfu.countBoy

@@ -16,5 +16,6 @@
     1. [稀疏数组](data-structures/sparse.md)
     2. [队列](data-structures/queue.md)
     3. [链表](data-structures/linked-list.md)
+    4. [栈](data-structures/stack.md)
    
 11集
