@@ -18,4 +18,5 @@
     3. [链表](data-structures/linked-list.md)
     4. [栈](data-structures/stack.md)
    
-11集
+2. 算法
+   1. [递归](arithmetic/recursion.md)

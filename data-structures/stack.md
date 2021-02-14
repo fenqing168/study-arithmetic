@@ -99,4 +99,5 @@
       6. 重复步骤2至5，直到表达式的最右边
       7. 将s1中剩余的运算符依次弹出并压入s2
       8. 依次弹出s2中元素并输出,结果的逆序纪委中缀表达式对应的后缀表达式
+      9. 代码见： cn.fenqing.datastructures.stack.PolandNotation.infix2Suffix
    
