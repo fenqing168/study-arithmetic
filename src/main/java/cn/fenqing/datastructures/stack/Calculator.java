@@ -23,10 +23,14 @@ public class Calculator {
 
     public static void main(String[] args) {
         @Cleanup Scanner in = new Scanner(System.in);
-        while (true){
+        int i = 0;
+        while (i <= 10){
             System.out.println("请输入表达式：");
             String expression = in.next();
             System.out.println("计算结果为：" + calculate(expression));
+            if(expression.isEmpty()){
+                i = 100;
+            }
         }
     }
 
