@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>迷宫</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div class="max-box" :style="{width: (map[0] || []).length * 50 + 'px'}">
+            <div>
+                <div style="display: flex">
+                    <p>行: <input v-model.number="row" /></p>
+                    <p>列: <input v-model.number="cell" /></p>
+                    <p>障碍数量: <input v-model.number="num" /></p>
+                    <p><button @click="start(1)">开始(下右上左)</button></p>
+                    <p><button @click="start(2)">开始(上下左右)</button></p>
+                    <p><button @click="start(3)">开始(上右下左)</button></p>
+                    <p><button @click="start2">最短路径走法</button></p>
+                    <p><button @click="reset">重置</button></p>
+                </div>
+            </div>
+            <div class="box" >
+                <div v-for="(row, index1) in map" class="row">
+                    <div v-for="(cell, index2) in row" class="cell" :class="cell === 1 ? 'wall' : ''">
+                        <div class="ball" v-if="cell === 2">
+                            {{messageMap[index1][index2]}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+<script language="JavaScript" src="../../../public/plugins/vue/vue.js"></script>
+<script language="JavaScript" src="../../../public/plugins/ext/object.js"></script>
+<script language="JavaScript" src="../../../public/plugins/ext/array.js"></script>
+<script language="JavaScript" src="js/js.js"></script>
+</html>

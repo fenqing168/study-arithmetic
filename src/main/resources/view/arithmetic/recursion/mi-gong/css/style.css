@@ -1,0 +1,43 @@
+[v-cloak] {
+    display: none;
+}
+
+.max-box{
+    margin: 0 auto;
+    text-align: center;
+}
+.max-box .box{
+    background: antiquewhite;
+    margin-bottom: 10px;
+}
+
+.max-box .row{
+    height: 50px;
+    display: flex;
+}
+
+.max-box .row .cell{
+    width: 20%;
+    height: 100%;
+    background: white;
+    border: 2px red solid;
+    border-left: none;
+}
+
+.max-box .row .cell:first-of-type{
+    border: 2px red solid;
+}
+
+.max-box .row .cell.wall{
+    background: #ee8484;
+}
+
+.max-box .row .cell .ball{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: red;
+    line-height: 50px;
+    text-align: center;
+    color: white;
+}
