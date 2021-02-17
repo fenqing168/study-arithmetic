@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>迷宫</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../../public/plugins/vuesax/css/vuesax.min.css">
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div>
+            <vs-button
+                    @click="start"
+            >
+                开始
+            </vs-button>
+            <vs-button
+                    @click="start2"
+            >
+                开始2
+            </vs-button>
+        </div>
+        <vs-row>
+            <vs-col v-for="item in find" vs-type="flex" vs-justify="center" vs-align="center" w="2" style="padding: 20px">
+                <div class="max-box">
+                    <div v-for="row in item" class="row" style="display: flex">
+                        <div v-for="cell in row" class="cell">
+                            <div v-if="cell != -1" class="ball">{{cell}}</div>
+                        </div>
+                    </div>
+                </div>
+            </vs-col>
+            正在寻找：
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="2" style="padding: 20px">
+                <div class="max-box">
+                    <div v-for="row in underway" class="row" style="display: flex">
+                        <div v-for="cell in row" class="cell">
+                            <div v-if="cell != -1" class="ball">{{cell}}</div>
+                        </div>
+                    </div>
+                </div>
+            </vs-col>
+        </vs-row>
+    </div>
+</body>
+<script language="JavaScript" src="../../../public/plugins/vue/vue.js"></script>
+<script language="JavaScript" src="../../../public/plugins/axios/axios.min.js"></script>
+<script language="JavaScript" src="../../../public/plugins/vuesax/js/vuesax.min.js"></script>
+<script language="JavaScript" src="../../../public/plugins/ext/object.js"></script>
+<script language="JavaScript" src="../../../public/plugins/ext/array.js"></script>
+<script language="JavaScript" src="js/js.js"></script>
+</html>
