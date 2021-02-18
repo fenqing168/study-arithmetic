@@ -15,7 +15,7 @@ public class Main {
          * TEST为测试是否正确
          * RUN_TIME为测试效率
          */
-        TEST(8, true),
+        TEST(10, true),
         RUN_TIME(80000, false);
         int size;
         boolean print;
@@ -26,7 +26,7 @@ public class Main {
         }
     }
 
-    static Env env = Env.RUN_TIME;
+    static Env env = Env.TEST;
 
 
     public static void main(String[] args) {
@@ -49,6 +49,21 @@ public class Main {
         System.out.println("插入排序");
         testInsertSort(nums.clone());
         System.out.println("==============================");
+        System.out.println("希尔排序");
+        testShellSort(nums.clone());
+        System.out.println("==============================");
+    }
+
+    private static void testShellSort(int[] nums) {
+        Sort sort = new ShellSort();
+        //排序前
+        if(env.print){
+            System.out.println("排序前：" + Arrays.toString(nums));
+        }
+        RunTime.synthesizeTest(() -> sort.sort(nums), "耗时：");
+        if(env.print){
+            System.out.println("排序后：" + Arrays.toString(nums));
+        }
     }
 
     /**
