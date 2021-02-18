@@ -19,4 +19,14 @@ public class RunTime {
         System.out.printf("%s: %d:ms\n", message, (end - start));
     }
 
+    public static void synthesizeTest(Runnable runnable, String message){
+        long start = System.currentTimeMillis();
+        long startNano = System.nanoTime();
+        runnable.run();
+        long end = System.currentTimeMillis();
+        long endNano = System.nanoTime();
+        System.out.printf("%s: %d:ms\n", message, (end - start));
+        System.out.printf("%s: %d:ns\n", message, (endNano - startNano));
+    }
+
 }
