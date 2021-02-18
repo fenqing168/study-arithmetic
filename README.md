@@ -20,3 +20,4 @@
    
 2. 算法
    1. [递归](arithmetic/recursion.md)
+   1. [排序](arithmetic/sort.md)
