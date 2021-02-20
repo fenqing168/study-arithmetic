@@ -9,7 +9,7 @@ public class QuickSort implements Sort {
 
     @Override
     public void sort(int[] array) {
-        sort(array, 0, array.length - 1);
+        quick_sort(array, 0, array.length - 1);
     }
 
     /**
@@ -54,4 +54,26 @@ public class QuickSort implements Sort {
         sort(array, left, r - 1);
         sort(array, r + 1, right);
     }
+    void quick_sort(int[] nums, int l,int r){
+        if(l>=r) {
+            return;
+        }
+        int i = l-1,j=r+1;
+        int mid = l+r>>1;
+        int x = nums[mid];
+        while(i<j){
+            while(nums[++i]<x) {
+            }
+            while(nums[--j]>x) {
+            }
+            if(i<j) {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        quick_sort(nums,l,j);
+        quick_sort(nums,j+1,r);
+    }
+
 }
