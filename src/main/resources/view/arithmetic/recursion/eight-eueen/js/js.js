@@ -11,7 +11,7 @@ new Vue({
     },
     methods: {
         async start(){
-            const {data:{find, underway, ok}} = await axios.get('http://localhost:8080/myserver?uuid=' + this.uuid)
+            const {data:{find, underway, ok}} = await axios.get('http://192.168.100.108:8080/myserver?uuid=' + this.uuid)
             this.find = find.map(item => {
                 return item.map(i => {
                     let arr = new Array(8).fill(-1);
@@ -29,7 +29,7 @@ new Vue({
             }
         },
         async start2(){
-            const {data:{find, underway, ok}} = await axios.get('http://localhost:8080/myserver2?uuid=' + this.uuid)
+            const {data:{find, underway, ok}} = await axios.get('http://192.168.100.108:8080/myserver2?uuid=' + this.uuid)
             this.find = find.map(item => {
                 return item.map(i => {
                     let arr = new Array(8).fill(-1);

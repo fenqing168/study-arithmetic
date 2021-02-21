@@ -1,14 +1,23 @@
 package cn.fenqing.arithmetic.sort;
 
 import cn.fenqing.test.RunTime;
+import com.alibaba.fastjson.JSON;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author Administrator
  */
 public class Main {
+
+    static Sort BUBBLE_SORT = new BubbleSort(),
+            SELECT_SORT = new SelectSort(),
+            INSERT_SORT = new InsertSort(),
+            SHELL_SORT = new ShellSort(),
+            QUICK_SORT = new QuickSort();
 
     enum Env {
         /**
@@ -16,7 +25,8 @@ public class Main {
          * RUN_TIME为测试效率
          */
         TEST(8, true),
-        RUN_TIME(80000, false);
+        RUN_TIME(80000, false),
+        VERIFY(80, false);
         int size;
         boolean print;
 
@@ -27,7 +37,7 @@ public class Main {
     }
 
     static Env env = Env.RUN_TIME;
-
+    static int VERIFY_TIME = 30000;
 
     public static void main(String[] args) {
 
@@ -36,47 +46,93 @@ public class Main {
         for (int i = 0; i < nums.length; i++) {
             nums[i] = random.nextInt(env.size);
         }
-        //冒泡排序
-        System.out.println("冒泡排序");
-        testBubbleSort(nums.clone());
-        System.out.println("==============================");
-        System.out.println("系统自带排序");
-        testArraysSort(nums.clone());
-        System.out.println("==============================");
-        System.out.println("选择排序");
-        testSelectSort(nums.clone());
-        System.out.println("==============================");
-        System.out.println("插入排序");
-        testInsertSort(nums.clone());
-        System.out.println("==============================");
-        System.out.println("希尔排序");
-        testShellSort(nums.clone());
-        System.out.println("==============================");
-        System.out.println("快速排序");
-        testQuickSort(nums.clone());
-        System.out.println("==============================");
+        if (env == Env.VERIFY) {
+            //冒泡排序
+            System.out.println("验证冒泡排序正确性：");
+            System.out.println(verify(BUBBLE_SORT::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
+            System.out.println("验证系统自带排序正确性：");
+            System.out.println(verify(Arrays::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
+            System.out.println("验证选择排序正确性：");
+            System.out.println(verify(SELECT_SORT::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
+            System.out.println("验证插入排序正确性：");
+            System.out.println(verify(INSERT_SORT::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
+            System.out.println("验证希尔排序正确性：");
+            System.out.println(verify(SHELL_SORT::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
+            System.out.println("验证快速排序正确性：");
+            System.out.println(verify(QUICK_SORT::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
+        } else {
+            //冒泡排序
+            System.out.println("冒泡排序");
+            testBubbleSort(nums.clone());
+            System.out.println("==============================");
+            System.out.println("系统自带排序");
+            testArraysSort(nums.clone());
+            System.out.println("==============================");
+            System.out.println("选择排序");
+            testSelectSort(nums.clone());
+            System.out.println("==============================");
+            System.out.println("插入排序");
+            testInsertSort(nums.clone());
+            System.out.println("==============================");
+            System.out.println("希尔排序");
+            testShellSort(nums.clone());
+            System.out.println("==============================");
+            System.out.println("快速排序");
+            testQuickSort(nums.clone());
+            System.out.println("==============================");
+        }
+    }
+
+    /**
+     * 校验排序的准确性
+     *
+     * @param sort 排序方法
+     * @return
+     */
+    private static int verify(Consumer<int[]> sort, int time) {
+        int res = 0;
+        Random random = new Random();
+        int[] nums = new int[env.size];
+        for (int i = 0; i < time; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                nums[j] = random.nextInt(env.size);
+            }
+            int[] clone1 = nums.clone();
+            int[] clone2 = nums.clone();
+            Arrays.sort(clone1);
+            sort.accept(clone2);
+            boolean equals = JSON.toJSONString(clone1).equals(JSON.toJSONString(clone2));
+            if (equals) {
+                res++;
+            }
+        }
+        return res;
     }
 
     private static void testShellSort(int[] nums) {
-        Sort sort = new ShellSort();
         //排序前
-        if(env.print){
+        if (env.print) {
             System.out.println("排序前：" + Arrays.toString(nums));
         }
-        RunTime.synthesizeTest(() -> sort.sort(nums), "耗时：");
-        if(env.print){
+        RunTime.synthesizeTest(() -> SHELL_SORT.sort(nums), "耗时：");
+        if (env.print) {
             System.out.println("排序后：" + Arrays.toString(nums));
         }
     }
 
     private static void testQuickSort(int[] nums) {
-        Sort sort = new QuickSort();
         //排序前
-        if(env.print){
+        if (env.print) {
             System.out.println("排序前：" + Arrays.toString(nums));
         }
-        RunTime.synthesizeTest(() -> sort.sort(nums), "耗时：");
-        if(env.print){
+        RunTime.synthesizeTest(() -> QUICK_SORT.sort(nums), "耗时：");
+        if (env.print) {
             System.out.println("排序后：" + Arrays.toString(nums));
         }
     }
@@ -85,13 +141,12 @@ public class Main {
      * 冒泡排序
      */
     public static void testBubbleSort(int[] nums) {
-        Sort sort = new BubbleSort();
         //排序前
-        if(env.print){
+        if (env.print) {
             System.out.println("排序前：" + Arrays.toString(nums));
         }
-        RunTime.synthesizeTest(() -> sort.sort(nums), "耗时：");
-        if(env.print){
+        RunTime.synthesizeTest(() -> BUBBLE_SORT.sort(nums), "耗时：");
+        if (env.print) {
             System.out.println("排序后：" + Arrays.toString(nums));
         }
     }
@@ -100,13 +155,12 @@ public class Main {
      * 选择排序
      */
     public static void testSelectSort(int[] nums) {
-        Sort sort = new SelectSort();
         //排序前
-        if(env.print){
+        if (env.print) {
             System.out.println("排序前：" + Arrays.toString(nums));
         }
-        RunTime.synthesizeTest(() -> sort.sort(nums), "耗时：");
-        if(env.print){
+        RunTime.synthesizeTest(() -> SELECT_SORT.sort(nums), "耗时：");
+        if (env.print) {
             System.out.println("排序后：" + Arrays.toString(nums));
         }
     }
@@ -115,13 +169,12 @@ public class Main {
      * 插入排序
      */
     public static void testInsertSort(int[] nums) {
-        Sort sort = new InsertSort();
         //排序前
-        if(env.print){
+        if (env.print) {
             System.out.println("排序前：" + Arrays.toString(nums));
         }
-        RunTime.synthesizeTest(() -> sort.sort(nums), "耗时：");
-        if(env.print){
+        RunTime.synthesizeTest(() -> INSERT_SORT.sort(nums), "耗时：");
+        if (env.print) {
             System.out.println("排序后：" + Arrays.toString(nums));
         }
     }
@@ -130,13 +183,12 @@ public class Main {
      * 自带的排序
      */
     public static void testArraysSort(int[] nums) {
-        Sort sort = new BubbleSort();
         //排序前
-        if(env.print){
+        if (env.print) {
             System.out.println("排序前：" + Arrays.toString(nums));
         }
         RunTime.synthesizeTest(() -> Arrays.sort(nums), "耗时：");
-        if(env.print){
+        if (env.print) {
             System.out.println("排序后：" + Arrays.toString(nums));
         }
     }

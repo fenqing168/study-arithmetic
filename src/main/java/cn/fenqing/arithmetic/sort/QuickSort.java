@@ -1,5 +1,7 @@
 package cn.fenqing.arithmetic.sort;
 
+import java.util.function.Function;
+
 /**
  * 快速排序
  *
@@ -9,7 +11,8 @@ public class QuickSort implements Sort {
 
     @Override
     public void sort(int[] array) {
-        quick_sort(array, 0, array.length - 1);
+//        array = new int[]{1, 5, 2, 4, 7, 5, 5, 3};
+        sort(array, 0, array.length - 1);
     }
 
     /**
@@ -26,54 +29,97 @@ public class QuickSort implements Sort {
         if(left >= right){
             return;
         }
-        int l = left + 1;
-        int r = right;
-        int pivot = array[left];
-        while (l < r){
-            while (array[l] <= pivot){
-                l++;
-                if (l == right) {
+        int pivotIndex = findPivotBySwap(array, left, right);
+        sort(array, left, pivotIndex - 1);
+        sort(array, pivotIndex + 1, right);
+    }
+
+    /**
+     * 通过挖坑法找中轴
+     * 1. 取数组第一个（start下标）为中轴，将其值保存起来，将当前下标视为一个"坑"
+     * 2. 定义两个指针变量，left,right,left从start+1开始，right为end
+     * 3. 从右边开始，向左找，直到找到一个比中轴值小的值，然后将该值赋值给“坑”,然后自己位置变为"坑"
+     * 4. 然后从左边开始，向右找，直到找到一个比中轴大或者等于的值，然后将值赋值给“坑”,然后自己变为"坑"
+     * 5. 反复此步骤，最后将中轴的值给最后坑的位置，即可，坑的位置就是中轴
+     * @param array 数组
+     * @param start 开始
+     * @param end 结束
+     * @return 中轴的下标
+     */
+    private int findPivotByPothole(int[] array, int start, int end){
+        //取数组第一个（start下标）为中轴,将其值保存起来,将当前下标视为一个"坑"
+        int pivot = array[start];
+        int pit = start;
+        //定义两个指针变量，left,right,left从start+1开始，right为end
+        int left = start + 1, right = end;
+        while (left <= right){
+            //从右边开始，向左找，直到找到一个比中轴值小的值，然后将该值赋值给“坑”,然后自己位置变为"坑"
+            while (array[right] > pivot){
+                right--;
+                if(right < left){
                     break;
                 }
             }
-            while (array[r] > pivot){
-                r--;
-                if (r == left) {
-                    break;
-                }
-            }
-            if(l >= r){
+            if(right < left){
                 break;
             }
-            int temp = array[r];
-            array[r] = array[l];
-            array[l] = temp;
+            array[pit] = array[right];
+            pit = right;
+            //然后从左边开始，向右找，直到找到一个比中轴大或者等于的值，然后将值赋值给“坑”,然后自己变为"坑"
+            while (array[left] <= pivot){
+                left++;
+                if(right < left){
+                    break;
+                }
+            }
+            if(right < left){
+                break;
+            }
+            array[pit] = array[left];
+            pit = left;
         }
-        array[left] = array[r];
-        array[r] = pivot;
-        sort(array, left, r - 1);
-        sort(array, r + 1, right);
+        //反复此步骤，最后将中轴的值给最后坑的位置，即可，坑的位置就是中轴
+        array[pit] = pivot;
+        return pit;
     }
-    void quick_sort(int[] nums, int l,int r){
-        if(l>=r) {
-            return;
+
+    /**
+     * 通过交换法找中轴
+     * 1. 找到一个pivot（基准），left和right（一般pivot选择序列的第一个元素，left为第一个元素，right为最后一个元素）
+     * 2. 向前移动right的位置，直到找到一个比pivot小的元素
+     * 3. 向后移动left的位置，直到找到一个比pivot大的元素
+     * 4. 交换当前的两个元素
+     * 5. 重复2，3，4步位置，直到left>right的时候停止。
+     * 6. 最后直接让right坐标与第一个交换即可（为什么是right：当left>right,则说明right当前的值在交会的时候一定被left检查过，
+     *  是小于pivot的，所以可以将其放在中轴左边）
+     * @param array 数组
+     * @param start 开始位置
+     * @param end 结束位置
+     * @return 中轴的下标
+     */
+    private int findPivotBySwap(int[] array, int start, int end){
+        //找到一个pivot（基准）
+        int pivot = array[start];
+        //left和right（一般pivot选择序列的第一个元素，left为第一个元素，right为最后一个元素）
+        int left = start + 1, right = end;
+        while (left <= right){
+            if (array[right] > pivot){
+                right--;
+                continue;
+            }
+            if (array[left] <= pivot){
+                left++;
+                continue;
+            }
+            //如果能到这里，则说明都找到了，则开始交换
+            int temp = array[left];
+            array[left] = array[right];
+            array[right] = temp;
         }
-        int i = l-1,j=r+1;
-        int mid = l+r>>1;
-        int x = nums[mid];
-        while(i<j){
-            while(nums[++i]<x) {
-            }
-            while(nums[--j]>x) {
-            }
-            if(i<j) {
-                int temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
-            }
-        }
-        quick_sort(nums,l,j);
-        quick_sort(nums,j+1,r);
+        //已经全部交换完，开始和中轴交换
+        array[start] = array[right];
+        array[right] = pivot;
+        return right;
     }
 
 }

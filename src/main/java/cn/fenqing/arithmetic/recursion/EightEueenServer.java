@@ -4,6 +4,7 @@ import cn.fenqing.test.RunTime;
 import com.alibaba.fastjson.JSON;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 import lombok.Data;
 import lombok.SneakyThrows;
 
@@ -11,11 +12,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
 
 /**
  * @author Administrator
@@ -25,29 +28,29 @@ public class EightEueenServer {
     private static int size = 8;
 
     public static void main(String[] args) throws IOException {
-//        //创建一个HttpServer实例，并绑定到指定的IP地址和端口号
-//        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8080), 0);
-//        httpServer.createContext("/", System.out::println);
-//        //创建一个HttpContext，将路径为/myserver请求映射到MyHttpHandler处理器
-//        httpServer.createContext("/myserver", new MyHttpHandler(1));
-//        httpServer.createContext("/myserver2", new MyHttpHandler(2));
-//
-//        //设置服务器的线程池对象
-//        httpServer.setExecutor(Executors.newFixedThreadPool(10));
+        //创建一个HttpServer实例，并绑定到指定的IP地址和端口号
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8080), 0);
+        httpServer.createContext("/", System.out::println);
+        //创建一个HttpContext，将路径为/myserver请求映射到MyHttpHandler处理器
+        httpServer.createContext("/myserver", new MyHttpHandler(1));
+        httpServer.createContext("/myserver2", new MyHttpHandler(2));
+
+        //设置服务器的线程池对象
+        httpServer.setExecutor(Executors.newFixedThreadPool(10));
 //
         //启动服务器
-//        httpServer.start();
-        Resp resp = new Resp();
-        resp.setUnderway(new int[size]);
-        resp.setFind(new ArrayList<>());
-        MyHttpHandler myHttpHandler = new MyHttpHandler(1);
-        RunTime.millisecondTest(() -> myHttpHandler.start(resp), "耗时：");
-        Resp resp1 = new Resp();
-        resp1.setUnderway(new int[size]);
-        resp1.setFind(new ArrayList<>());
-        MyHttpHandler myHttpHandler1 = new MyHttpHandler(2);
-        RunTime.millisecondTest(() -> myHttpHandler1.start2(resp1), "耗时：");
-        System.out.println();
+        httpServer.start();
+//        Resp resp = new Resp();
+//        resp.setUnderway(new int[size]);
+//        resp.setFind(new ArrayList<>());
+//        MyHttpHandler myHttpHandler = new MyHttpHandler(1);
+//        RunTime.millisecondTest(() -> myHttpHandler.start(resp), "耗时：");
+//        Resp resp1 = new Resp();
+//        resp1.setUnderway(new int[size]);
+//        resp1.setFind(new ArrayList<>());
+//        MyHttpHandler myHttpHandler1 = new MyHttpHandler(2);
+//        RunTime.millisecondTest(() -> myHttpHandler1.start2(resp1), "耗时：");
+//        System.out.println();
     }
 
 
@@ -121,6 +124,7 @@ class MyHttpHandler implements HttpHandler {
 
     @SneakyThrows
     public void start2(Resp resp, int level){
+        Thread.sleep(100);
         int[] underway = resp.getUnderway();
         for (int i = 0; i < size; i++) {
             underway[level] = i;
