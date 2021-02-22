@@ -171,3 +171,9 @@
     2. 思想
         1. 将数组分成两份，再对每一份继续分成2份，直到不能再分（分）
         2. 然后对每一份进行合并（治）
+    3. 代码见：cn.fenqing.arithmetic.sort.MergeSort
+    
+
+12. 基数排序
+    1. 介绍
+        1. 基数排序（radix sort） 属于“分配式排序” （distribution sort), 又称“桶子法”，或bin sort，
