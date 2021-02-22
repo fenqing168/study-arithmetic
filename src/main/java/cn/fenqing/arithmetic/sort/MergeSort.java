@@ -1,15 +1,26 @@
 package cn.fenqing.arithmetic.sort;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
 /**
  * @author fenqing
  */
 public class MergeSort implements Sort{
     @Override
     public void sort(int[] array) {
+        int[] temp = new int[array.length];
+        mergeSort(array, 0, array.length - 1, temp);
+        System.arraycopy(temp, 0, array, 0, array.length);
+    }
 
+    public void mergeSort(int[] array, int left, int right, int[] temp){
+        if(left < right){
+            int mid = (left + right) / 2;
+            //先向左递归进行分解
+            mergeSort(array, left, mid, temp);
+            //向右递归
+            mergeSort(array, mid + 1, right, temp);
+
+            merge(array, left, mid + 1, right, temp);
+        }
     }
 
     /**
@@ -37,13 +48,9 @@ public class MergeSort implements Sort{
             temp[cur] = min;
             cur++;
         }
+        for (int i = left; i <= right; i++) {
+            array[i] = temp[i];
+        }
     }
 
-    public static void main(String[] args) {
-        int[] arr = {1, 5, 6, 2, 3, 4};
-        HashMap
-        int[] temp = new int[arr.length];
-        new MergeSort().merge(arr, 2, 3, 3, temp);
-        System.out.println(Arrays.toString(temp));
-    }
 }

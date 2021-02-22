@@ -17,7 +17,8 @@ public class Main {
             SELECT_SORT = new SelectSort(),
             INSERT_SORT = new InsertSort(),
             SHELL_SORT = new ShellSort(),
-            QUICK_SORT = new QuickSort();
+            QUICK_SORT = new QuickSort(),
+            MEGRGE_SORT = new MergeSort();
 
     enum Env {
         /**
@@ -66,6 +67,9 @@ public class Main {
             System.out.println("验证快速排序正确性：");
             System.out.println(verify(QUICK_SORT::sort, VERIFY_TIME) + "次正确");
             System.out.println("==============================");
+            System.out.println("验证归并排序正确性：");
+            System.out.println(verify(MEGRGE_SORT::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
         } else {
             //冒泡排序
             System.out.println("冒泡排序");
@@ -85,6 +89,9 @@ public class Main {
             System.out.println("==============================");
             System.out.println("快速排序");
             testQuickSort(nums.clone());
+            System.out.println("==============================");
+            System.out.println("归并排序");
+            testMergeSort(nums.clone());
             System.out.println("==============================");
         }
     }
@@ -132,6 +139,17 @@ public class Main {
             System.out.println("排序前：" + Arrays.toString(nums));
         }
         RunTime.synthesizeTest(() -> QUICK_SORT.sort(nums), "耗时：");
+        if (env.print) {
+            System.out.println("排序后：" + Arrays.toString(nums));
+        }
+    }
+
+    private static void testMergeSort(int[] nums) {
+        //排序前
+        if (env.print) {
+            System.out.println("排序前：" + Arrays.toString(nums));
+        }
+        RunTime.synthesizeTest(() -> MEGRGE_SORT.sort(nums), "耗时：");
         if (env.print) {
             System.out.println("排序后：" + Arrays.toString(nums));
         }
