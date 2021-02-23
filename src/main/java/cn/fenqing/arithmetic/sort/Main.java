@@ -18,7 +18,8 @@ public class Main {
             INSERT_SORT = new InsertSort(),
             SHELL_SORT = new ShellSort(),
             QUICK_SORT = new QuickSort(),
-            MEGRGE_SORT = new MergeSort();
+            MEGRGE_SORT = new MergeSort(),
+            REDIX_SORT = new RedixSort();
 
     enum Env {
         /**
@@ -37,7 +38,7 @@ public class Main {
         }
     }
 
-    static Env env = Env.RUN_TIME;
+    static Env env = Env.TEST;
     static int VERIFY_TIME = 30000;
 
     public static void main(String[] args) {
@@ -70,6 +71,9 @@ public class Main {
             System.out.println("验证归并排序正确性：");
             System.out.println(verify(MEGRGE_SORT::sort, VERIFY_TIME) + "次正确");
             System.out.println("==============================");
+            System.out.println("验证基数排序正确性：");
+            System.out.println(verify(REDIX_SORT::sort, VERIFY_TIME) + "次正确");
+            System.out.println("==============================");
         } else {
             //冒泡排序
             System.out.println("冒泡排序");
@@ -92,6 +96,9 @@ public class Main {
             System.out.println("==============================");
             System.out.println("归并排序");
             testMergeSort(nums.clone());
+            System.out.println("==============================");
+            System.out.println("基数排序");
+            testRedixSort(nums.clone());
             System.out.println("==============================");
         }
     }
@@ -120,6 +127,17 @@ public class Main {
             }
         }
         return res;
+    }
+
+    private static void testRedixSort(int[] nums) {
+        //排序前
+        if (env.print) {
+            System.out.println("排序前：" + Arrays.toString(nums));
+        }
+        RunTime.synthesizeTest(() -> REDIX_SORT.sort(nums), "耗时：");
+        if (env.print) {
+            System.out.println("排序后：" + Arrays.toString(nums));
+        }
     }
 
     private static void testShellSort(int[] nums) {
