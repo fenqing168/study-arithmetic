@@ -6,7 +6,8 @@ package cn.fenqing.arithmetic.search;
 public class BinarySearch implements Search{
     @Override
     public int search(int[] array, int val) {
-        return recursionSort(array, val, 0, array.length - 1);
+//        return recursionSort(array, val, 0, array.length - 1);
+        return doublePointerSort(array, val);
     }
 
     /**
@@ -30,5 +31,21 @@ public class BinarySearch implements Search{
         }else {
             return recursionSort(array, val, mid + 1, end);
         }
+    }
+
+    public int doublePointerSort(int[] array, int val){
+        int p = 0, q = array.length - 1;
+        while (p <= q){
+            int mid = (p + q) / 2;
+            int midVal = array[mid];
+            if(midVal == val){
+                return mid;
+            }else if(midVal > val){
+                q = mid - 1;
+            }else {
+                p = mid + 1;
+            }
+        }
+        return -1;
     }
 }
