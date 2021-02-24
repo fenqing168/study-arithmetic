@@ -38,7 +38,7 @@ public class Main {
         }
     }
 
-    static Env env = Env.TEST;
+    static Env env = Env.RUN_TIME;
     static int VERIFY_TIME = 30000;
 
     public static void main(String[] args) {
@@ -46,7 +46,7 @@ public class Main {
         int[] nums = new int[env.size];
         Random random = new Random();
         for (int i = 0; i < nums.length; i++) {
-            nums[i] = random.nextInt(env.size);
+            nums[i] = random.nextInt(env.size) - env.size / 2;
         }
         if (env == Env.VERIFY) {
             //冒泡排序
