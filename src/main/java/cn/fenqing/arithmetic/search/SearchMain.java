@@ -1,6 +1,7 @@
 package cn.fenqing.arithmetic.search;
 
 import cn.fenqing.arithmetic.sort.Main;
+import cn.fenqing.arithmetic.sort.Sort;
 import cn.fenqing.test.RunTime;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.Random;
  */
 public class SearchMain {
 
-    static Search SEQ = new SeqSearch();
+    static Search SEQ = new SeqSearch(), BINARY = new BinarySearch();
 
     enum Env {
         /**
@@ -38,15 +39,31 @@ public class SearchMain {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = random.nextInt(env.size) - env.size / 2;
         }
-        int val = arr[random.nextInt(env.size)];
+        int index = random.nextInt(env.size);
+        int[] arrTemp = arr.clone();
+        int val = arrTemp[index];
         System.out.println("=====================");
         System.out.println("线性查找");
         if(env.print){
-            System.out.println(Arrays.toString(arr));
+            System.out.println(Arrays.toString(arrTemp));
         }
         System.out.println("查找的值为" + val);
-        int search = RunTime.synthesizeTest(() -> SEQ.search(arr, val), "耗时");
-        System.out.println("查找到的值为" + arr[search] + ",下标为" + search);
+        int[] arrTemp1 = arrTemp;
+        int search = RunTime.synthesizeTest(() -> SEQ.search(arrTemp1, val), "耗时");
+        System.out.println("查找到的值为" + arrTemp[search] + ",下标为" + search);
+
+
+        System.out.println("=====================");
+        arrTemp = arr.clone();
+        Arrays.sort(arrTemp);
+        System.out.println("二分查找");
+        if(env.print){
+            System.out.println(Arrays.toString(arrTemp));
+        }
+        System.out.println("查找的值为" + val);
+        int[] arrTemp2 = arrTemp;
+        search = RunTime.synthesizeTest(() -> BINARY.search(arrTemp2, val), "耗时");
+        System.out.println("查找到的值为" + arrTemp[search] + ",下标为" + search);
     }
 
 }
