@@ -27,7 +27,7 @@ public class Main {
          * RUN_TIME为测试效率
          */
         TEST(8, true),
-        RUN_TIME(80000, false),
+        RUN_TIME(8000000, false),
         VERIFY(80, false);
         int size;
         boolean print;
@@ -75,28 +75,28 @@ public class Main {
             System.out.println(verify(REDIX_SORT::sort, VERIFY_TIME) + "次正确");
             System.out.println("==============================");
         } else {
-            //冒泡排序
-            System.out.println("冒泡排序");
-            testBubbleSort(nums.clone());
-            System.out.println("==============================");
             System.out.println("系统自带排序");
             testArraysSort(nums.clone());
             System.out.println("==============================");
-            System.out.println("选择排序");
-            testSelectSort(nums.clone());
-            System.out.println("==============================");
-            System.out.println("插入排序");
-            testInsertSort(nums.clone());
-            System.out.println("==============================");
-            System.out.println("希尔排序");
-            testShellSort(nums.clone());
-            System.out.println("==============================");
-            System.out.println("快速排序");
-            testQuickSort(nums.clone());
-            System.out.println("==============================");
-            System.out.println("归并排序");
-            testMergeSort(nums.clone());
-            System.out.println("==============================");
+            //冒泡排序
+//            System.out.println("冒泡排序");
+//            testBubbleSort(nums.clone());
+//            System.out.println("==============================");
+//            System.out.println("选择排序");
+//            testSelectSort(nums.clone());
+//            System.out.println("==============================");
+//            System.out.println("插入排序");
+//            testInsertSort(nums.clone());
+//            System.out.println("==============================");
+//            System.out.println("希尔排序");
+//            testShellSort(nums.clone());
+//            System.out.println("==============================");
+//            System.out.println("快速排序");
+//            testQuickSort(nums.clone());
+//            System.out.println("==============================");
+//            System.out.println("归并排序");
+//            testMergeSort(nums.clone());
+//            System.out.println("==============================");
             System.out.println("基数排序");
             testRedixSort(nums.clone());
             System.out.println("==============================");
