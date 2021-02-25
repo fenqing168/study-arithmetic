@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class SearchMain {
 
-    static Search SEQ = new SeqSearch(), BINARY = new BinarySearch();
+    static Search SEQ = new SeqSearch(), BINARY = new BinarySearch(), INTERPOLATION = new InterpolationSearch();
 
     enum Env {
         /**
@@ -37,7 +37,7 @@ public class SearchMain {
         Random random = new Random();
         int[] arr = new int[env.size];
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = random.nextInt(env.size) - env.size / 2;
+            arr[i] = random.nextInt(env.size);
         }
         int index = random.nextInt(env.size);
         int[] arrTemp = arr.clone();
@@ -64,6 +64,22 @@ public class SearchMain {
         int[] arrTemp2 = arrTemp;
         search = RunTime.synthesizeTest(() -> BINARY.search(arrTemp2, val), "耗时");
         System.out.println("查找到的值为" + arrTemp[search] + ",下标为" + search);
+
+        System.out.println("=====================");
+        System.out.println("插值查找");
+        int[] arrTemp3 = new int[env.size];
+        for (int i = 0; i < arrTemp3.length; i++) {
+            arrTemp3[i] = i + 1;
+        }
+        if(env.print){
+            System.out.println(Arrays.toString(arrTemp3));
+        }
+        int val1 = arrTemp3[random.nextInt(env.size)];
+        System.out.println("查找的值为" + val1);
+
+        search = RunTime.synthesizeTest(() -> INTERPOLATION.search(arrTemp3, val1), "耗时");
+        System.out.println("查找到的值为" + arrTemp[search] + ",下标为" + search);
+
     }
 
 }

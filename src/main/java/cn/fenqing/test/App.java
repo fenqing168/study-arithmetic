@@ -7,17 +7,21 @@ import java.util.stream.Collectors;
 
 public class App {
 
-    public static void main(String[] args) {
-        List<Integer> arr = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            arr.add(i);
-        }
-        System.out.println("删除前：==================");
-        arr.forEach(System.out::println);
-        //删除3
-        arr = arr.stream().filter(item -> item != 3).collect(Collectors.toList());
-        System.out.println("删除后：==================");
-        arr.forEach(System.out::println);
+    public static void main(String[] args) throws CloneNotSupportedException, IllegalAccessException, InstantiationException {
+        Demo demo1 = new Demo();
+        Demo demo2 = Demo.class.newInstance();
+        System.out.println("demo1 == demo2 为：" + (demo1 == demo2));
     }
 
+}
+
+class Demo implements Cloneable{
+    Demo(){
+        System.out.println("调用了构造函数！");
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
