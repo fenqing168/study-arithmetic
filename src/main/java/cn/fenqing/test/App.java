@@ -1,16 +1,42 @@
 package cn.fenqing.test;
 
+import java.io.File;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class App {
 
     public static void main(String[] args) throws CloneNotSupportedException, IllegalAccessException, InstantiationException {
-        Demo demo1 = new Demo();
-        Demo demo2 = Demo.class.newInstance();
-        System.out.println("demo1 == demo2 为：" + (demo1 == demo2));
+
+        each(new File("D:\\file\\code\\java\\study-arithmetic"));
+
+
+    }
+
+    public static void each(File file){
+        Stack<File> stack = new Stack<>();
+        stack.push(file);
+        while (!stack.isEmpty()){
+            File pop = stack.pop();
+            System.out.println(pop.getAbsolutePath());
+            if(pop.isDirectory()){
+                File[] files = pop.listFiles();
+                for (File file1 : files) {
+                    stack.push(file1);
+                }
+            }
+        }
+    }
+
+    /**
+     * 用来存局部变量
+     */
+    static class  LocalVariable {
+        int index;
     }
 
 }

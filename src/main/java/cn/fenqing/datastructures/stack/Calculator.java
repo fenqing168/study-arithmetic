@@ -81,13 +81,14 @@ public class Calculator {
     }
 
     public static double windUp(LinkedStack<Double> numStack, LinkedStack<Character> operStack){
-        if(operStack.isEmpty()){
-            return numStack.pop();
+        while (!operStack.isEmpty()){
+            Double num1 = numStack.pop();
+            Double num2 = numStack.pop();
+            Character oper = operStack.pop();
+            double res = cal(num2, num1, oper);
+            numStack.push(res);
         }
-        Double num1 = numStack.pop();
-        Character oper = operStack.pop();
-        double num2 = windUp(numStack, operStack);
-        return cal(num2, num1, oper);
+        return numStack.pop();
     }
 
     public static int priority(char oper) {

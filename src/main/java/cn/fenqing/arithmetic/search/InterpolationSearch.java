@@ -1,5 +1,7 @@
 package cn.fenqing.arithmetic.search;
 
+import java.util.ArrayList;
+
 public class InterpolationSearch implements Search{
     @Override
     public int search(int[] array, int val) {
