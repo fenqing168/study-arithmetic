@@ -1,53 +1,47 @@
 package cn.fenqing.test;
 
-import java.io.File;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
+
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class App {
 
     public static void main(String[] args) throws CloneNotSupportedException, IllegalAccessException, InstantiationException {
-
-        each(new File("D:\\file\\code\\java\\study-arithmetic"));
-
-
-    }
-
-    public static void each(File file){
-        Stack<File> stack = new Stack<>();
-        stack.push(file);
-        while (!stack.isEmpty()){
-            File pop = stack.pop();
-            System.out.println(pop.getAbsolutePath());
-            if(pop.isDirectory()){
-                File[] files = pop.listFiles();
-                for (File file1 : files) {
-                    stack.push(file1);
-                }
-            }
+        for (int i = 0; i < 10; i++) {
+            Obj obj = new Obj();
+            MyThread runnable = new MyThread();
+            MyThread2 runnable2 = new MyThread2();
+            runnable.obj = obj;
+            runnable2.obj = obj;
+            Thread thread1 = new Thread(runnable, "线程1");
+            Thread thread2 = new Thread(runnable2, "线程2");
+            thread1.start();
+            thread2.start();
         }
     }
-
-    /**
-     * 用来存局部变量
-     */
-    static class  LocalVariable {
-        int index;
-    }
-
 }
 
-class Demo implements Cloneable{
-    Demo(){
-        System.out.println("调用了构造函数！");
-    }
-
+class MyThread implements Runnable {
+    Obj obj = null;
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public void run() {
+        while (obj.flag) {
+
+        }
+        System.out.println(obj.str.length());
     }
+}
+class MyThread2 implements Runnable {
+    Obj obj = null;
+    @Override
+    public void run() {
+        obj.str = "sadfasd";
+        obj.flag = false;
+    }
+}
+
+
+class Obj{
+    boolean flag = true;
+    String str = null;
 }
