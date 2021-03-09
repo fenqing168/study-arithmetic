@@ -1,4 +1,4 @@
-package cn.fenqing.arithmetic.leetcode.commons;
+package cn.fenqing.arithmetic.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
