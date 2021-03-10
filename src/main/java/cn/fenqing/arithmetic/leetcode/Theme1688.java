@@ -3,7 +3,7 @@ package cn.fenqing.arithmetic.leetcode;
 public class Theme1688 {
 
     public int numberOfMatches(int n) {
-        if(n == 1){
+        if(n <= 1){
             return 0;
         }
         int num = n / 2;
