@@ -25,7 +25,16 @@ public class Transition {
         return res;
     }
 
-    public static Integer[] getIntArray(String text) {
+    public static int[] getIntArray(String text) {
+        JSONArray objects = JSON.parseArray(text);
+        int[] res = new int[objects.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = objects.getInteger(i);
+        }
+        return res;
+    }
+
+    public static Integer[] getIntegerArray(String text) {
         JSONArray objects = JSON.parseArray(text);
         Integer[] res = new Integer[objects.size()];
         for (int i = 0; i < res.length; i++) {
@@ -35,7 +44,7 @@ public class Transition {
     }
 
     public static TreeNode string2TreeNode(String text){
-        Integer[] intArray = getIntArray(text);
+        Integer[] intArray = getIntegerArray(text);
         Deque<TreeNode> deque = new LinkedList<>();
         TreeNode root = new TreeNode(intArray[0]);
         deque.add(root);
